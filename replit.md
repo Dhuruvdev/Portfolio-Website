@@ -12,6 +12,23 @@ This is a React + TypeScript portfolio website featuring 3D animations using Thr
 
 ## Recent Changes (December 1, 2025)
 
+### Loading Screen Fix
+1. **Added Fallback Timer**: 
+   - 8-second fallback timer in Loading.tsx prevents infinite loading
+   - Timer fires once on mount and forces completion if 3D models fail to load
+   - Protected by ref flag to prevent duplicate triggers
+
+2. **WebGL Error Handling**:
+   - Scene.tsx now catches WebGL initialization failures
+   - Sets loading to 100% when WebGL fails gracefully
+   - Character model load errors are properly caught
+
+3. **Error Boundaries**:
+   - Created ErrorBoundary.tsx component for React error catching
+   - Wrapped CharacterModel in App.tsx with ErrorBoundary
+   - Wrapped TechStack in MainContainer.tsx with ErrorBoundary
+   - Added try-catch blocks in initialFX.ts for animation errors
+
 ### GitHub Import Setup
 1. **Removed Premium GSAP Dependencies**: 
    - Removed `@gsap/react`, `gsap-trial` packages that required authentication
