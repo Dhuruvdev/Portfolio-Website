@@ -15,43 +15,37 @@ const Career = () => {
           <div className="career-info-box">
             <div className="career-info-in">
               <div className="career-role">
-                <h4>Position In Company</h4>
-                <h5>Company Name</h5>
+                <h4>Student Developer</h4>
+                <h5>Self-Learning Journey</h5>
               </div>
-              <h3>20XX</h3>
+              <h3>2021</h3>
             </div>
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim
-              labore sit non ipsum temporibus quidem, deserunt eaque officiis
-              mollitia ratione suscipit repellat.
+              Started my coding journey learning Python fundamentals and basic web development. Built first personal projects including command-line utilities and static websites to understand core programming concepts.
             </p>
           </div>
           <div className="career-info-box">
             <div className="career-info-in">
               <div className="career-role">
-                <h4>Position In Company</h4>
-                <h5>Company Name</h5>
+                <h4>Full Stack Developer</h4>
+                <h5>Independent Projects</h5>
               </div>
-              <h3>20XX</h3>
+              <h3>2022</h3>
             </div>
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim
-              labore sit non ipsum temporibus quidem, deserunt eaque officiis
-              mollitia ratione suscipit repellat.
+              Advanced to JavaScript and React, developed multiple responsive web applications. Started game development with C# and Unity, created Discord bots for community management using Python. Mastered modern web development tools and frameworks.
             </p>
           </div>
           <div className="career-info-box">
             <div className="career-info-in">
               <div className="career-role">
-                <h4>Position In Company</h4>
-                <h5>Company Name</h5>
+                <h4>Multi-Disciplinary Creator</h4>
+                <h5>Game Design & Web Development</h5>
               </div>
               <h3>NOW</h3>
             </div>
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Enim
-              labore sit non ipsum temporibus quidem, deserunt eaque officiis
-              mollitia ratione suscipit repellat.
+              Currently balancing commerce studies with active development. Creating sophisticated web applications with React and modern JavaScript, developing game prototypes with engaging mechanics, and building Discord communities with custom bots. Continuously learning and expanding skill set.
             </p>
           </div>
         </div>
