@@ -1,0 +1,57 @@
+.enhanced-cursor {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9999;
+  background-color: rgba(194, 164, 255, 0.15);
+  border: 1px solid rgba(194, 164, 255, 0.5);
+  mix-blend-mode: difference;
+  transform: translate(-50%, -50%);
+  will-change: transform, width, height;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.enhanced-cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 10000;
+  background-color: #c2a4ff;
+  box-shadow: 0 0 20px rgba(194, 164, 255, 0.8);
+  transform: translate(-50%, -50%);
+  will-change: transform;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.enhanced-cursor.clicking {
+  transform: translate(-50%, -50%) scale(0.8);
+}
+
+.enhanced-cursor.hovering {
+  transform: translate(-50%, -50%) scale(1.5);
+  background-color: rgba(194, 164, 255, 0.3);
+}
+
+@media (hover: none) and (pointer: coarse) {
+  .enhanced-cursor,
+  .enhanced-cursor-dot {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  .enhanced-cursor,
+  .enhanced-cursor-dot {
+    display: none;
+  }
+}

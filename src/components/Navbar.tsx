@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import HoverLinks from "./HoverLinks";
 import { gsap } from "gsap";
+import { getLenis, pauseScroll, resumeScroll } from "./utils/SmoothScroll";
 import "./styles/Navbar.css";
 
 gsap.registerPlugin(ScrollTrigger);
@@ -10,27 +11,40 @@ export const scrollState = {
   isPaused: true,
   setPaused: (paused: boolean) => {
     scrollState.isPaused = paused;
-    document.body.style.overflowY = paused ? "hidden" : "auto";
+    if (paused) {
+      pauseScroll();
+      document.body.style.overflowY = "hidden";
+    } else {
+      resumeScroll();
+      document.body.style.overflowY = "auto";
+    }
   }
 };
 
 const Navbar = () => {
   useEffect(() => {
-    document.documentElement.style.scrollBehavior = "smooth";
     scrollState.setPaused(true);
 
-    let links = document.querySelectorAll(".header ul a");
+    const links = document.querySelectorAll(".header ul a");
     links.forEach((elem) => {
-      let element = elem as HTMLAnchorElement;
+      const element = elem as HTMLAnchorElement;
       element.addEventListener("click", (e) => {
         if (window.innerWidth > 1024) {
           e.preventDefault();
-          let elem = e.currentTarget as HTMLAnchorElement;
-          let section = elem.getAttribute("data-href");
+          const section = element.getAttribute("data-href");
           if (section) {
             const target = document.querySelector(section);
             if (target) {
-              target.scrollIntoView({ behavior: "smooth", block: "start" });
+              const lenis = getLenis();
+              if (lenis) {
+                lenis.scrollTo(target as HTMLElement, {
+                  offset: 0,
+                  duration: 1.2,
+                  easing: (t: number) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+                });
+              } else {
+                target.scrollIntoView({ behavior: "smooth", block: "start" });
+              }
             }
           }
         }
