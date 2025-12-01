@@ -10,6 +10,13 @@ export default defineConfig({
     strictPort: true,
     allowedHosts: true,
     middlewareMode: false,
+    hmr: {
+      host: '0.0.0.0',
+      port: 5000,
+    },
+    fs: {
+      strict: false,
+    },
   },
   preview: {
     host: '0.0.0.0',
@@ -32,5 +39,9 @@ export default defineConfig({
       },
     },
     chunkSizeWarningLimit: 600,
+  },
+  optimizeDeps: {
+    include: ['react', 'react-dom', 'three', 'gsap'],
+    exclude: ['@react-three/fiber'],
   },
 });
