@@ -11,7 +11,7 @@ const Landing = ({ children }: PropsWithChildren) => {
             <h1>
               DHURUV
               <br />
-              <span>DEV</span>
+              <span></span>
             </h1>
           </div>
           <div className="landing-info">
