@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import "./styles/Loading.css";
 import { useLoading } from "../context/LoadingProvider";
 
@@ -9,29 +9,57 @@ const Loading = ({ percent }: { percent: number }) => {
   const [loaded, setLoaded] = useState(false);
   const [isLoaded, setIsLoaded] = useState(false);
   const [clicked, setClicked] = useState(false);
-
-  if (percent >= 100) {
-    setTimeout(() => {
-      setLoaded(true);
-      setTimeout(() => {
-        setIsLoaded(true);
-      }, 1000);
-    }, 600);
-  }
+  const loadedTriggered = useRef(false);
+  const fallbackTriggered = useRef(false);
 
   useEffect(() => {
-    import("./utils/initialFX").then((module) => {
-      if (isLoaded) {
+    if (percent >= 100 && !loadedTriggered.current) {
+      loadedTriggered.current = true;
+      const timer = setTimeout(() => {
+        setLoaded(true);
+        setTimeout(() => {
+          setIsLoaded(true);
+        }, 1000);
+      }, 600);
+      return () => clearTimeout(timer);
+    }
+  }, [percent]);
+
+  useEffect(() => {
+    const fallbackTimer = setTimeout(() => {
+      if (!fallbackTriggered.current) {
+        fallbackTriggered.current = true;
+        console.log("Loading fallback triggered - forcing completion");
+        setLoaded(true);
+        setTimeout(() => {
+          setIsLoaded(true);
+        }, 500);
+      }
+    }, 8000);
+
+    return () => clearTimeout(fallbackTimer);
+  }, []);
+
+  useEffect(() => {
+    if (isLoaded) {
+      import("./utils/initialFX").then((module) => {
         setClicked(true);
         setTimeout(() => {
-          if (module.initialFX) {
-            module.initialFX();
+          try {
+            if (module.initialFX) {
+              module.initialFX();
+            }
+          } catch (error) {
+            console.error("Error running initialFX:", error);
           }
           setIsLoading(false);
         }, 900);
-      }
-    });
-  }, [isLoaded]);
+      }).catch((error) => {
+        console.error("Error loading initialFX module:", error);
+        setIsLoading(false);
+      });
+    }
+  }, [isLoaded, setIsLoading]);
 
   function handleMouseMove(e: React.MouseEvent<HTMLElement>) {
     const { currentTarget: target } = e;

@@ -1,5 +1,6 @@
 import { lazy, Suspense } from "react";
 import "./App.css";
+import ErrorBoundary from "./components/ErrorBoundary";
 
 const CharacterModel = lazy(() => import("./components/Character"));
 const MainContainer = lazy(() => import("./components/MainContainer"));
@@ -11,9 +12,11 @@ const App = () => {
       <LoadingProvider>
         <Suspense>
           <MainContainer>
-            <Suspense>
-              <CharacterModel />
-            </Suspense>
+            <ErrorBoundary>
+              <Suspense>
+                <CharacterModel />
+              </Suspense>
+            </ErrorBoundary>
           </MainContainer>
         </Suspense>
       </LoadingProvider>

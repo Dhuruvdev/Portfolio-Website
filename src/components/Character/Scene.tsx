@@ -20,6 +20,8 @@ const Scene = () => {
   const { setLoading } = useLoading();
 
   const [character, setChar] = useState<THREE.Object3D | null>(null);
+  const [webglError, setWebglError] = useState<boolean>(false);
+  
   useEffect(() => {
     if (canvasDiv.current) {
       let rect = canvasDiv.current.getBoundingClientRect();
@@ -27,10 +29,26 @@ const Scene = () => {
       const aspect = container.width / container.height;
       const scene = sceneRef.current;
 
-      const renderer = new THREE.WebGLRenderer({
-        alpha: true,
-        antialias: true,
-      });
+      let renderer: THREE.WebGLRenderer;
+      try {
+        renderer = new THREE.WebGLRenderer({
+          alpha: true,
+          antialias: true,
+        });
+      } catch (error) {
+        console.error("WebGL initialization failed:", error);
+        setWebglError(true);
+        setLoading(100);
+        return;
+      }
+      
+      if (!renderer.getContext()) {
+        console.error("WebGL context not available");
+        setWebglError(true);
+        setLoading(100);
+        return;
+      }
+      
       renderer.setSize(container.width, container.height);
       renderer.setPixelRatio(window.devicePixelRatio);
       renderer.toneMapping = THREE.ACESFilmicToneMapping;
@@ -73,6 +91,9 @@ const Scene = () => {
             handleResize(renderer, camera, canvasDiv, character)
           );
         }
+      }).catch((error) => {
+        console.error("Error loading character model:", error);
+        progress.clear();
       });
 
       let mouse = { x: 0, y: 0 },
@@ -148,10 +169,16 @@ const Scene = () => {
   return (
     <>
       <div className="character-container">
-        <div className="character-model" ref={canvasDiv}>
-          <div className="character-rim"></div>
-          <div className="character-hover" ref={hoverDivRef}></div>
-        </div>
+        {webglError ? (
+          <div className="character-model" style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+            <div className="character-rim"></div>
+          </div>
+        ) : (
+          <div className="character-model" ref={canvasDiv}>
+            <div className="character-rim"></div>
+            <div className="character-hover" ref={hoverDivRef}></div>
+          </div>
+        )}
       </div>
     </>
   );
