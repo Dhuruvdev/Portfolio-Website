@@ -33,7 +33,8 @@ const Scene = () => {
       try {
         renderer = new THREE.WebGLRenderer({
           alpha: true,
-          antialias: true,
+          antialias: window.devicePixelRatio <= 1,
+          powerPreference: 'high-performance',
         });
       } catch (error) {
         console.error("WebGL initialization failed:", error);
@@ -50,7 +51,7 @@ const Scene = () => {
       }
       
       renderer.setSize(container.width, container.height);
-      renderer.setPixelRatio(window.devicePixelRatio);
+      renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
       renderer.toneMapping = THREE.ACESFilmicToneMapping;
       renderer.toneMappingExposure = 1;
       canvasDiv.current.appendChild(renderer.domElement);

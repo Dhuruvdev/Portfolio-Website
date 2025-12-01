@@ -9,9 +9,28 @@ export default defineConfig({
     port: 5000,
     strictPort: true,
     allowedHosts: ['.replit.dev', '.repl.co'],
+    middlewareMode: false,
   },
   preview: {
     host: '0.0.0.0',
     port: 5000,
+  },
+  build: {
+    minify: 'terser',
+    terserOptions: {
+      compress: {
+        drop_console: true,
+      },
+    },
+    rollupOptions: {
+      output: {
+        manualChunks: {
+          'three': ['three'],
+          'gsap': ['gsap'],
+          'react-vendor': ['react', 'react-dom'],
+        },
+      },
+    },
+    chunkSizeWarningLimit: 600,
   },
 });
