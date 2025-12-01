@@ -39,8 +39,6 @@ export class TextSplitter {
       this.splitChars(text);
     } else if (types.includes('words' as SplitType)) {
       this.splitWords(text);
-    } else if (types.includes('lines' as SplitType)) {
-      this.splitLines(text);
     }
   }
 
@@ -63,7 +61,7 @@ export class TextSplitter {
 
   private splitWords(text: string) {
     const words: HTMLElement[] = [];
-    const wordArray = text.split(/\s+/);
+    const wordArray = text.split(/\s+/).filter(word => word.length > 0);
     
     const html = wordArray.map((word, i) => {
       return `<span class="word" style="display: inline-block;">${word}</span>${i < wordArray.length - 1 ? ' ' : ''}`;
@@ -75,22 +73,6 @@ export class TextSplitter {
     wordElements.forEach(el => words.push(el));
     
     this.splitElements.words = words;
-  }
-
-  private splitLines(text: string) {
-    const lines: HTMLElement[] = [];
-    const lineArray = text.split('\n');
-    
-    const html = lineArray.map((line) => {
-      return `<span class="line" style="display: block;">${line}</span>`;
-    }).join('');
-    
-    this.element.innerHTML = html;
-    
-    const lineElements = this.element.querySelectorAll<HTMLElement>('.line');
-    lineElements.forEach(el => lines.push(el));
-    
-    this.splitElements.lines = lines;
   }
 
   get chars() {
