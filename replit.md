@@ -12,6 +12,44 @@ This is a React + TypeScript portfolio website featuring 3D animations using Thr
 
 ## Recent Changes (December 1, 2025)
 
+### GSAP Animation Combo Tools Implementation
+Implemented a comprehensive animation system with the following GSAP combo tools:
+
+1. **Lenis Smooth Scroll + GSAP ScrollTrigger**
+   - `src/components/utils/SmoothScroll.ts` - Smooth scroll integration
+   - Seamless scrolling experience with proper GSAP ticker integration
+   - Scroll-triggered animations throughout the site
+
+2. **Enhanced Text Animations**
+   - `src/components/utils/EnhancedTextAnimation.ts` - Advanced text effects
+   - Character, word, and line splitting with reveal animations
+   - Typewriter, glitch, and wave text effects
+
+3. **Magnetic & Tilt Effects**
+   - `src/components/utils/MagneticEffect.ts` - Interactive element effects
+   - Magnetic hover effects for buttons and links
+   - 3D tilt effects for cards
+
+4. **Enhanced Cursor**
+   - `src/components/EnhancedCursor.tsx` - Smooth GSAP-powered cursor
+   - Responsive to interactive elements with scale and morph effects
+   - GPU-accelerated for smooth performance
+
+5. **Page Transitions**
+   - `src/components/utils/PageTransitions.ts` - Transition utilities
+   - Fade, slide, curtain, and reveal transitions
+   - Section-based scroll animations
+
+6. **Animation Hooks**
+   - `src/hooks/useAnimations.ts` - React hooks for easy integration
+   - useScrollAnimation, useRevealAnimation, useParallax, useFadeIn
+   - useStaggerAnimation for staggered child reveals
+
+7. **Performance Optimizations**
+   - CSS utility classes for will-change and GPU acceleration
+   - Proper cleanup and memory management
+   - Reduced motion support for accessibility
+
 ### Loading Screen Fix
 1. **Added Fallback Timer**: 
    - 8-second fallback timer in Loading.tsx prevents infinite loading
@@ -78,6 +116,7 @@ Click the "Publish" button in Replit to deploy the static site.
 - **Vite** 5.4.1
 - **Three.js** 0.168.0
 - **GSAP** 3.12.7 (free version)
+- **Lenis** (smooth scroll library)
 - **React Three Fiber** 8.17.10
 - **React Three Drei** 9.120.4
 
