@@ -5,6 +5,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 gsap.registerPlugin(ScrollTrigger);
 
 let lenisInstance: Lenis | null = null;
+let tickerCallback: ((time: number) => void) | null = null;
 
 export function initSmoothScroll(): Lenis {
   if (lenisInstance) {
@@ -24,10 +25,11 @@ export function initSmoothScroll(): Lenis {
 
   lenisInstance.on('scroll', ScrollTrigger.update);
 
-  gsap.ticker.add((time) => {
+  tickerCallback = (time: number) => {
     lenisInstance?.raf(time * 1000);
-  });
-
+  };
+  
+  gsap.ticker.add(tickerCallback);
   gsap.ticker.lagSmoothing(0);
 
   return lenisInstance;
@@ -59,9 +61,10 @@ export function scrollTo(target: string | number | HTMLElement, options?: {
 
 export function destroySmoothScroll(): void {
   if (lenisInstance) {
-    gsap.ticker.remove((time) => {
-      lenisInstance?.raf(time * 1000);
-    });
+    if (tickerCallback) {
+      gsap.ticker.remove(tickerCallback);
+      tickerCallback = null;
+    }
     lenisInstance.destroy();
     lenisInstance = null;
   }
