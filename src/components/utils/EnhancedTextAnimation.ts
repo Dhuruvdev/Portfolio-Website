@@ -41,7 +41,7 @@ export class EnhancedTextSplitter {
     const text = this.element.textContent || '';
     this.chars = [];
     
-    const html = text.split('').map((char, i) => {
+    const html = text.split('').map((char) => {
       if (char === ' ') {
         return '<span class="split-space" style="display: inline;">&nbsp;</span>';
       }

@@ -23,11 +23,11 @@ export class TextSplitter {
 
     this.originalHTML = this.element.innerHTML;
     
-    const types = options?.type 
+    const types: SplitType[] = options?.type 
       ? Array.isArray(options.type) 
-        ? options.type 
-        : [options.type]
-      : ['chars'];
+        ? (options.type as SplitType[])
+        : [options.type as SplitType]
+      : ['chars' as const];
 
     this.split(types);
   }
@@ -35,9 +35,9 @@ export class TextSplitter {
   private split(types: SplitType[]) {
     const text = this.element.textContent || '';
     
-    if (types.includes('chars' as SplitType)) {
+    if (types.includes('chars')) {
       this.splitChars(text);
-    } else if (types.includes('words' as SplitType)) {
+    } else if (types.includes('words')) {
       this.splitWords(text);
     }
   }
